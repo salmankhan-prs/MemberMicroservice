@@ -10,7 +10,7 @@ import org.mockito.Mock;
  * this is the interface where the service methods are declared
  */
 
-public class ClaimServiceTest {
+ class ClaimServiceTest {
 
 	@Mock
 	ClaimService service;

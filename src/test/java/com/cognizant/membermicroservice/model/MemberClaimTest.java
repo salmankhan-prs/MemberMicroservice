@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MemberClaimTest {
+ class MemberClaimTest {
 
 	@Mock
 	private MemberClaim memberclaim;

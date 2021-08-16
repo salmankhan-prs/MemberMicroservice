@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MemberTest {
+ class MemberTest {
 
 	@Mock
 	private Member mem;

@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ViewBillsDTOTest {
+ class ViewBillsDTOTest {
 
 	@Mock
 	private ViewBillsDTO viewBillsDto;

@@ -20,7 +20,7 @@ import com.cognizant.membermicroservice.client.AuthClient;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class AuthenticationResponseTest {
+ class AuthenticationResponseTest {
 
 	@Mock
 	public AuthenticationResponse response;

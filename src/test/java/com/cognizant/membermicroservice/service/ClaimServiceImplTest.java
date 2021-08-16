@@ -32,7 +32,7 @@ import com.cognizant.membermicroservice.repository.PremiumRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ClaimServiceImplTest {
+ class ClaimServiceImplTest {
 
 	@InjectMocks
 	private ClaimServiceImpl claimServiceImpl;
@@ -123,7 +123,7 @@ public class ClaimServiceImplTest {
 		when(premiumRepository.getById(1)).thenReturn(memberPremium);
 		PolicyNotFoundException thrown = Assertions.assertThrows(PolicyNotFoundException.class,
 				() -> claimServiceImpl.viewBills(1, 2));
-		assertEquals("Data Not Found!!!", thrown.getMessage());
+		assertEquals("policy Not Found!!!", thrown.getMessage());
 
 	}
 

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.cognizant.membermicroservice.model.SubmitClaimRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +37,7 @@ import com.cognizant.membermicroservice.service.ClaimServiceImpl;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MemberPremiumControllerTest {
+ class MemberPremiumControllerTest {
 
 	@InjectMocks
 	MemberPremiumController memberController;
@@ -46,6 +47,8 @@ public class MemberPremiumControllerTest {
 
 	@Mock
 	ClaimRepository claimRepo;
+	@Mock
+	SubmitClaimRequest submitClaimRequest;
 
 	@Mock
 	ClaimService claimserviceimpl;
@@ -134,21 +137,21 @@ public class MemberPremiumControllerTest {
 	 * To test submitClaim method
 	 */
 
-//	@Test
-//	void submitClaimTest() throws Exception {
-//
-//		AuthenticationResponse response = new AuthenticationResponse("token", true);
-//
-//		MemberClaim memberClaim = new MemberClaim(1, 1, 1, 1, 202, 10000.0, 10000.0, "Pending Action",
-//				"claim has been submitted! Please check after few days for confirmation");
-//		ResponseEntity<ClaimStatusDTO> claims = new ResponseEntity<ClaimStatusDTO>(claimdto, HttpStatus.OK);
-//
-//		when(authClient.getValidity("token")).thenReturn(response);
-//		when(claimsClient.submitClaim(1, 1, 1, 1, 201, 10000, 10000, "token")).thenReturn(claims);
-//
-//
-//		assertEquals(claims.getStatusCodeValue(),
-//				memberController.submitClaim(1, 1, 1, 1, 201, 10000, 10000, "token").getStatusCodeValue());
-//	}
+	@Test
+	void submitClaimTest() throws Exception {
+
+		AuthenticationResponse response = new AuthenticationResponse("token", true);
+		submitClaimRequest =new SubmitClaimRequest(1,2,3,100,200,290,100);
+		MemberClaim memberClaim = new MemberClaim(1, 1, 1, 1, 202, 10000.0, 10000.0, "Pending Action",
+				"claim has been submitted! Please check after few days for confirmation");
+		ResponseEntity<ClaimStatusDTO> claims = new ResponseEntity<ClaimStatusDTO>(claimdto, HttpStatus.OK);
+
+		when(authClient.getValidity("token")).thenReturn(response);
+		when(claimsClient.submitClaim(submitClaimRequest,  "token")).thenReturn(claims);
+
+
+		assertEquals(claims.getStatusCodeValue(),
+				memberController.submitClaim(submitClaimRequest,  "token").getStatusCodeValue());
+	}
 
 }

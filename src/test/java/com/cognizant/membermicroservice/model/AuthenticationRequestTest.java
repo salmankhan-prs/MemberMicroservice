@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class AuthenticationRequestTest {
+ class AuthenticationRequestTest {
 
 	@Mock
 	public AuthenticationRequest authreq;
