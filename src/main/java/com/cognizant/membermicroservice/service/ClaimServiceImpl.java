@@ -1,6 +1,11 @@
 package com.cognizant.membermicroservice.service;
 
+import com.cognizant.membermicroservice.client.ClaimsClient;
+import com.cognizant.membermicroservice.dto.ClaimStatusDTO;
+import com.cognizant.membermicroservice.model.SubmitClaimRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cognizant.membermicroservice.dto.ViewBillsDTO;
@@ -14,6 +19,8 @@ import com.cognizant.membermicroservice.repository.PremiumRepository;
  *
  */
 public class ClaimServiceImpl implements ClaimService {
+	@Autowired
+	private ClaimsClient claimsClient;
 
 	@Autowired
 	private PremiumRepository premiumRepository;
@@ -23,6 +30,7 @@ public class ClaimServiceImpl implements ClaimService {
 
 	@Autowired
 	private MemberPremium memberPremium;
+	private  ClaimStatusDTO claimStatusDTO;
 
 	/**
 	 * 
@@ -36,7 +44,7 @@ public class ClaimServiceImpl implements ClaimService {
 	public ViewBillsDTO viewBills(int memberId, int policyId) throws PolicyNotFoundException {
 		MemberPremium premium = premiumRepository.findByMemberIdAndPolicyId(memberId,policyId);
 
-		if (premiumRepository.existsByMemberIdAndPolicyId(memberId,policyId)) {
+		if (premium!=null) {
 			viewBillsDto.setPaidDate(premium.getPaidDate());
 			viewBillsDto.setPremium(premium.getPremium());
 			viewBillsDto.setLatePayment(premium.isLatePayment());
@@ -48,4 +56,6 @@ public class ClaimServiceImpl implements ClaimService {
 		return viewBillsDto;
 
 	}
+
+
 }

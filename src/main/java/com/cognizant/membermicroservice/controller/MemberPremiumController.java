@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * This class is handling all the end points for MemberMicroservice. This
  * controller has mappings as- getmapping-viewBills()
- * getmapping-getClaimStatus() 
- * postmapping-submitClaim()
+ * get mapping-getClaimStatus()
+ * post mapping-submitClaim()
  *
  */
 
@@ -33,13 +33,15 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberPremiumController {
 
 	@Autowired
-	private ClaimService claimserviceimpl;
+	private ClaimService claimServiceImpl;
 
 	@Autowired
 	private AuthClient authClient;
 
 	@Autowired
 	private ClaimsClient claimsClient;
+	private ResponseEntity<ClaimStatusDTO> claimResponse;
+	private ResponseEntity<ClaimStatusDTO> claimStatus;
 
 	/**
 	 * 
@@ -70,7 +72,7 @@ public class MemberPremiumController {
 
 		}
 		log.info("End - viewBills()");
-		return new ResponseEntity<ViewBillsDTO>(claimserviceimpl.viewBills(memberId, policyId), HttpStatus.OK);
+		return new ResponseEntity<ViewBillsDTO>(claimServiceImpl.viewBills(memberId, policyId), HttpStatus.OK);
 	}
 
 	/**
@@ -101,8 +103,13 @@ public class MemberPremiumController {
 			return new ResponseEntity<>("Token is either expired or invalid...", HttpStatus.BAD_REQUEST);
 
 		}
+        try {
+			 claimStatus = claimsClient.getClaimStatus(claimId, policyId, memberId, token);
+		}
+		catch (FeignException feignException){
+			return new ResponseEntity<>("request is not success.Please enter valid  data and try again",HttpStatus.BAD_REQUEST);
+		}
 
-		ResponseEntity<ClaimStatusDTO> claimStatus = claimsClient.getClaimStatus(claimId, policyId, memberId, token);
 		log.info("End - getClaimStatus()");
 		return claimStatus;
 
@@ -133,7 +140,13 @@ public class MemberPremiumController {
 			return new ResponseEntity<>("Token is either expired or invalid...", HttpStatus.BAD_REQUEST);
 
 		}
-		ResponseEntity<ClaimStatusDTO> claimResponse = claimsClient.submitClaim(submitClaimRequest, token);
+
+		try {
+			 claimResponse = claimsClient.submitClaim(submitClaimRequest, token);
+		}
+		catch (FeignException feignException){
+			return new ResponseEntity<>("request is not success.Please enter valid  data and try again",HttpStatus.BAD_REQUEST);
+		}
 		log.info("End - submitClaim()");
 		return claimResponse;
 	}
